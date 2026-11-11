@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VibeVerse - 首頁</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+</head>
+<body>
+
+  <div id="app" class="app-container">
+
+    <aside id="sidebar" class="sidebar liquid-glass-bar">
+      <div class="brand">
+        <h1 id="logo" class="logo">VibeVerse</h1>
+      </div>
+      <nav class="nav-menu">
+        <button class="nav-item active" id="nav-home">
+          <span class="material-symbols-outlined icon">home</span>
+          <span class="label">首頁</span>
+        </button>
+        <button class="nav-item" id="nav-explore">
+          <span class="material-symbols-outlined icon">explore</span>
+          <span class="label">探索空間</span>
+        </button>
+        <button class="nav-item" id="nav-sync">
+          <span class="material-symbols-outlined icon">bolt</span>
+          <span class="label">時空同步</span>
+        </button>
+        <button class="nav-item" id="nav-notifications">
+          <span class="material-symbols-outlined icon">notifications</span>
+          <span class="label">共鳴通知</span>
+        </button>
+        <button class="nav-item" id="nav-profile">
+          <span class="material-symbols-outlined icon">person</span>
+          <span class="label">個人檔案</span>
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <button id="btn-create-post" class="btn-primary">+ 發布膠囊貼文</button>
+      </div>
+    </aside>
+
+    <main id="main-feed" class="main-feed">
+      
+      <!-- 動態牆視圖 -->
+      <div id="view-feed">
+        <section id="sync-stories-bar" class="sync-stories-bar liquid-glass-bar">
+          <div class="story-item story-create" id="story-my-status">
+            <div class="avatar-ring sync-active">
+              <div class="avatar" id="story-my-avatar">--</div>
+            </div>
+            <span class="story-username">發起同步</span>
+          </div>
+          <div id="stories-dynamic-container" class="stories-dynamic-container"></div>
+        </section>
+
+        <div id="posts-container" class="posts-container">
+          <div id="posts-loading-placeholder" class="text-center text-muted py-8">載入動態膠囊中...</div>
+        </div>
+      </div>
+
+    </main>
+
+    <aside id="widgets-sidebar" class="widgets-sidebar">
+      
+      <div class="widget-card user-profile-widget liquid-glass-bar" id="widget-profile">
+        <div class="avatar avatar-large" id="widget-avatar">--</div>
+        <div class="profile-info">
+          <h3 id="current-user-name">載入中...</h3>
+          <p id="current-user-handle">@loading</p>
+        </div>
+      </div>
+
+      <div class="widget-card liquid-glass-bar" id="widget-suggestions">
+        <h3 class="widget-title">推薦共鳴創作者</h3>
+        <ul class="suggestion-list" id="suggestion-list"></ul>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- 全螢幕登入 & 設定 ID 牆 (Auth Guard) -->
+  <div id="auth-modal" class="auth-modal-overlay">
+    <div class="auth-modal-content liquid-glass-bar">
+      
+      <div id="auth-step-login">
+        <h1 class="auth-logo">VibeVerse</h1>
+        <p class="auth-subtitle">探索時空膠囊與共鳴動態</p>
+
+        <button id="btn-google-login" class="btn-google">
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="google-icon" />
+          使用 Google 帳號繼續
+        </button>
+       </div>
+
+      <div id="auth-step-onboarding" class="hidden">
+        <h2 class="auth-title">建立個人檔案</h2>
+        <p class="auth-subtitle">請為你在 VibeVerse 設定暱稱與獨一無二的 ID</p>
+
+        <form id="onboarding-form" class="auth-form">
+          <div class="input-group">
+            <label class="input-label">顯示暱稱</label>
+            <input type="text" id="setup-display-name" placeholder="例如：Ray" required />
+          </div>
+          <div class="input-group">
+            <label class="input-label">用戶 ID (Handle)</label>
+            <input type="text" id="setup-username" placeholder="例如：ray_coder" pattern="^[a-z0-9_]+$" required />
+          </div>
+          <button type="submit" class="btn-primary">進入 VibeVerse</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 編輯個人檔案 Modal -->
+  <div id="edit-profile-modal" class="auth-modal-overlay hidden">
+    <div class="auth-modal-content liquid-glass-bar">
+      <h2 class="auth-title">編輯個人檔案</h2>
+      <p id="edit-limit-hint" class="auth-subtitle" style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem;">
+        14 天內僅能修改 2 次暱稱與 ID
+      </p>
+
+      <form id="edit-profile-form" class="auth-form">
+        <div class="input-group">
+          <label class="input-label">變更頭像</label>
+          <input type="file" id="edit-avatar-file" accept="image/*" />
+        </div>
+        <div class="input-group">
+          <label class="input-label">顯示暱稱</label>
+          <input type="text" id="edit-display-name" required />
+        </div>
+        <div class="input-group">
+          <label class="input-label">用戶 ID (Handle)</label>
+          <input type="text" id="edit-username" pattern="^[a-z0-9_]+$" required />
+        </div>
+        <div class="flex gap-2">
+          <button type="submit" class="btn-primary">儲存變更</button>
+          <button type="button" id="btn-close-edit-modal" class="btn-secondary" style="width: 100%;">取消</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 發布膠囊貼文 Modal -->
+  <div id="create-post-modal" class="auth-modal-overlay hidden">
+    <div class="auth-modal-content liquid-glass-bar">
+      <h2 class="auth-title">發布時空膠囊</h2>
+      <p class="auth-subtitle">分享你當下的思考與共鳴文字</p>
+
+      <form id="create-post-form" class="auth-form">
+        <div class="input-group">
+          <textarea id="post-content-input" placeholder="在想些什麼？發布一條文字膠囊吧..." rows="4" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius-md); color: #fff; outline: none; resize: none;" required></textarea>
+        </div>
+        <div class="flex gap-2">
+          <button type="submit" class="btn-primary">發布膠囊</button>
+          <button type="button" id="btn-close-post-modal" class="btn-secondary" style="width: 100%;">取消</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+  <script>
+    // 頁面導航切換
+    document.getElementById('nav-profile').addEventListener('click', () => {
+      window.location.href = 'profile.html';
+    });
+  </script>
+</body>
+</html>
