@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VibeVerse - 個人檔案</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="description" content="VibeVerse - 探索時空膠囊與共鳴動態，分享你的思考與文字膠囊。" />
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="stylesheet" href="/css/style.css" />
+    <link rel="description" content="VibeVerse - 探索時空膠囊與共鳴動態，分享你的思考與文字膠囊。" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 </head>
 <body>
 
@@ -15,7 +15,10 @@
 
     <aside id="sidebar" class="sidebar liquid-glass-bar">
       <div class="brand">
-        <h1 id="logo" class="logo">VibeVerse</h1>
+        <a id="logo" class="logo brand-link" href="/home" aria-label="VibeVerse 首頁">
+          <img src="/logo.png" alt="" class="brand-logo-image" />
+          <span>VibeVerse</span>
+        </a>
       </div>
       <nav class="nav-menu">
         <button class="nav-item" id="nav-home">
@@ -34,13 +37,23 @@
           <span class="material-symbols-outlined icon">notifications</span>
           <span class="label">共鳴通知</span>
         </button>
+        <button class="nav-item" id="nav-messages">
+          <span class="material-symbols-outlined icon">mail</span>
+          <span class="label">訊息</span>
+        </button>
         <button class="nav-item active" id="nav-profile">
           <span class="material-symbols-outlined icon">person</span>
           <span class="label">個人檔案</span>
         </button>
       </nav>
       <div class="sidebar-footer">
-        <button id="btn-create-post" class="btn-primary">+ 發布膠囊貼文</button>
+        <div class="create-menu-wrap">
+          <button type="button" id="btn-create-menu" class="btn-primary create-menu-trigger" aria-expanded="false" aria-controls="create-menu-options"><span class="material-symbols-outlined">add</span><span>新增</span></button>
+          <div id="create-menu-options" class="create-menu-options hidden">
+            <button type="button" data-create-option="post"><span class="material-symbols-outlined">edit_note</span>文字貼文</button>
+            <button type="button" data-create-option="note"><span class="material-symbols-outlined">sticky_note_2</span>便利貼</button>
+          </div>
+        </div>
       </div>
     </aside>
 
@@ -51,7 +64,7 @@
         <div class="profile-header-card liquid-glass-bar">
           <div class="profile-banner"></div>
           <div class="profile-main-info">
-            <div class="avatar avatar-profile" id="profile-page-avatar">--</div>
+            <a class="avatar avatar-profile" id="profile-page-avatar" href="/home" aria-label="個人檔案頭像">--</a>
             <div class="profile-text">
               <h2 id="profile-page-name">訪客</h2>
               <p id="profile-page-handle">@guest</p>
@@ -74,7 +87,7 @@
     <aside id="widgets-sidebar" class="widgets-sidebar">
       
       <div class="widget-card user-profile-widget liquid-glass-bar" id="widget-profile">
-        <div class="avatar avatar-large" id="widget-avatar">--</div>
+        <a class="avatar avatar-large" id="widget-avatar" href="/home" aria-label="我的個人檔案">--</a>
         <div class="profile-info">
           <h3 id="current-user-name">訪客</h3>
           <p id="current-user-handle">@guest</p>
@@ -91,11 +104,11 @@
   </div>
 
   <!-- 全螢幕登入 & 設定 ID 牆 (Auth Guard) -->
-  <div id="auth-modal" class="auth-modal-overlay">
+  <div id="auth-modal" class="auth-modal-overlay hidden">
     <div class="auth-modal-content liquid-glass-bar">
       
       <div id="auth-step-login">
-        <h1 class="auth-logo">VibeVerse</h1>
+        <h1 class="auth-logo"><img src="/logo.gif" alt="VibeVerse" /></h1>
         <p class="auth-subtitle">探索時空膠囊與共鳴動態</p>
 
         <button id="btn-google-login" class="btn-google">
@@ -120,6 +133,8 @@
           <button type="submit" class="btn-primary">進入 VibeVerse</button>
         </form>
       </div>
+
+      <button type="button" id="btn-guest-mode" class="btn-guest-mode">以訪客模式進入</button>
 
     </div>
   </div>
@@ -171,12 +186,18 @@
     </div>
   </div>
 
-  <script type="module" src="js/main.js"></script>
-  <script>
-    // 頁面導航切換
-    document.getElementById('nav-home').addEventListener('click', () => {
-      window.location.href = 'index.html';
-    });
-  </script>
+  <div id="app-dialog" class="app-dialog-overlay hidden" aria-hidden="true">
+    <section class="app-dialog liquid-glass-bar" role="alertdialog" aria-modal="true" aria-labelledby="app-dialog-title" aria-describedby="app-dialog-message">
+      <div class="app-dialog-mark" aria-hidden="true"><span class="material-symbols-outlined">info</span></div>
+      <h2 id="app-dialog-title" class="app-dialog-title">VibeVerse</h2>
+      <p id="app-dialog-message" class="app-dialog-message"></p>
+      <div class="app-dialog-actions">
+        <button type="button" id="app-dialog-cancel" class="btn-secondary hidden">取消</button>
+        <button type="button" id="app-dialog-confirm" class="btn-primary">知道了</button>
+      </div>
+    </section>
+  </div>
+
+  <script type="module" src="/js/main.js"></script>
 </body>
 </html>
