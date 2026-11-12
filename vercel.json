@@ -1,0 +1,47 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/home",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/home",
+      "permanent": true
+    },
+    {
+      "source": "/home/",
+      "destination": "/home",
+      "permanent": true
+    },
+    {
+      "source": "/messages.html",
+      "destination": "/messages",
+      "permanent": true
+    },
+    {
+      "source": "/messages/",
+      "destination": "/messages",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/home",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/messages",
+      "destination": "/messages.html"
+    },
+    {
+      "source": "/profile/@:username",
+      "destination": "/profile.html"
+    },
+    {
+      "source": "/profile/@:username/",
+      "destination": "/profile.html"
+    }
+  ]
+}
